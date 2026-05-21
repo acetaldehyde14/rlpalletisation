@@ -1,109 +1,167 @@
-# Pallet Packing RL Agent
+# Pallet Packing RL Agent  --  v2 (psatops-aligned)
 
-A MaskablePPO agent that learns to pack mixed SKU items into the fewest pallets at the highest volume utilisation. The environment uses a heightmap representation, action masking for legal placements, and a reward that rewards volume gain while penalising new pallets.
+A MaskablePPO reinforcement learning agent for 3D pallet packing that mirrors
+the placement logic in the **psatops** Java backend.
 
-## Files
+---
+
+## What changed from v1
+
+| Aspect | v1 (grid sweep) | v2 (Extreme Point) |
+|---|---|---|
+| Action space | grid_l * grid_w * 6 ~ 19 800 | K_EP * 6 = **300** |
+| Placement candidates | every grid cell | extreme points only |
+| Placement coordinates | grid-snapped (20 mm) | **exact mm** |
+| Support check | flat-surface only | **70% footprint** (psatops) |
+| Bottom-up stacking | via heightmap max | gravity-first EP sort |
+| Rotations | 6 | 6 (matching RotationUtils) |
+| Training speed | baseline | **~10-20x faster** |
+
+### Extreme Point algorithm (mirrors psatops)
+
+After each placed box `b`, three new candidate positions are generated:
 
 ```
-pallet_rl/
-├── data.json          training data (your items)
-├── pallet_env.py      Gymnasium environment + Item dataclass
-├── train.py           MaskablePPO trainer
-├── evaluate.py        runs agent vs First Fit Decreasing baseline + 3D plots
-├── smoke_test.py      quick env sanity check (no RL stack needed)
-├── requirements.txt
-└── README.md
+(b.x + b.l, b.y,       b.z)
+(b.x,       b.y + b.w, b.z)
+(b.x,       b.y,       b.z + b.h)
 ```
 
-## Install
+Plus the origin `(0, 0, 0)`.  Candidates are sorted by
+`z * 1000 + x + y` -- the same gravity-first score used by
+`ScoringUtils.scoreCandidate` in psatops.  This guarantees items
+pack from the bottom up.
 
-```bash
-pip install -r requirements.txt
+### 70% support fraction (mirrors psatops)
+
+Any item placed at `z > 0` must have at least 70% of its footprint
+area physically resting on the top surfaces of already-placed boxes.
+This matches `PlacementUtils.SUPPORT_THRESHOLD = 0.70`.
+
+### Rotations (mirrors psatops RotationUtils)
+
+```
+0  LWH   (l, w, h)   -- original
+1  WLH   (w, l, h)   -- horizontal 90 degree
+2  LHW   (l, h, w)   -- tipped onto width face
+3  HLW   (h, l, w)
+4  WHL   (w, h, l)   -- tipped onto length face
+5  HWL   (h, w, l)
 ```
 
-Optional for training logs:
-
-```bash
-pip install tensorboard
-```
+---
 
 ## Quick start
 
-Run the baseline first to verify everything works without training:
+```bash
+pip install stable-baselines3 sb3-contrib torch numpy matplotlib gymnasium
+```
+
+### Run baselines only (no training needed)
 
 ```bash
 python evaluate.py --baseline_only
 ```
 
-Train the agent:
+Produces `ff_result.png` (First Fit) and `ep_result.png` (Extreme Point).
+The EP baseline is the closest Python equivalent to psatops `EXTREME_POINT`.
+
+### Train
 
 ```bash
-python train.py --timesteps 500000 --n_envs 4
+# Standard  (~5 min, 4 CPU cores)
+python train.py --timesteps 500000 --n_envs 4 --no_tensorboard
+
+# Thorough  (~20 min, 8 cores, real parallelism)
+python train.py --timesteps 2000000 --n_envs 8 --subproc
+
+# Quick smoke test
+python train.py --timesteps 20000 --n_envs 2 --no_tensorboard
 ```
 
-For faster training on a multicore CPU:
-
-```bash
-python train.py --timesteps 1000000 --n_envs 8 --subproc
-```
-
-Skip tensorboard if it is not installed:
-
-```bash
-python train.py --timesteps 500000 --no_tensorboard
-```
-
-Evaluate the trained agent and visualise the result:
+### Evaluate trained model
 
 ```bash
 python evaluate.py --model checkpoints/best_model.zip
 ```
 
-This writes `baseline_result.png` and `agent_result.png` in the current directory.
+Produces `agent_result.png` alongside the two baselines.
 
-## How the environment works
+---
 
-Pallet dimensions default to 1200 mm × 800 mm × 1500 mm (EUR pallet) with a 1000 kg weight cap. The floor discretises into a 60 × 40 grid at 20 mm resolution. Items expand to one entry per unit of quantity (your data yields 117 items) and sort by volume descending so the agent always places the next largest unplaced item.
-
-The state contains three pieces. The first is a normalised 60 × 40 heightmap of the current pallet's top surface. The second is the next item as a 4 vector of length, width, height, weight normalised against pallet limits. The third is a 2 vector of progress information (fraction of items placed, normalised pallet count).
-
-The action is a single discrete index over `grid_l × grid_w × 2` (4800 actions), decoded into `(x, y, rotation)`. Rotation 0 keeps length along x, rotation 1 rotates the item 90 degrees around the vertical axis. A `sliding_window_view` computes the legal action mask in a vectorised pass: a placement is legal when the item fits within bounds, the footprint sits on a single flat height level (full support), the new stack height stays under the pallet limit, and the pallet weight cap is not exceeded.
-
-When the agent's chosen position fails the check the env opens a new pallet and tries the corner `(0, 0)` with both rotations. If even an empty pallet cannot hold the item (oversized for any pallet) the item is skipped with a heavy penalty.
-
-## Reward design
-
-Per step:
-1. Plus `(item_volume / pallet_volume) × 20` for every successful placement.
-2. Minus `new_pallet_penalty` (default 5.0) when a fresh pallet opens.
-3. Minus `skip_penalty` (default 10.0) when an item cannot be placed anywhere.
-
-Episode terminal bonus:
-4. Plus `utilisation × final_utilization_bonus` (default 50.0) where utilisation is `total_used_volume / (n_pallets × pallet_volume)`.
-5. Minus `pallet_count × pallet_count_penalty` (default 2.0).
-
-Tune these constants in `PalletPackingEnv.__init__` to bias toward fewer pallets vs higher utilisation. The two objectives correlate strongly (fewer pallets usually means higher fill) but you can shift the balance: raise `pallet_count_penalty` for fewer pallets at any cost, raise `final_utilization_bonus` to favour dense packing.
-
-## Customising
-
-Pallet geometry in `evaluate.py`:
+## Custom pallet / input
 
 ```bash
-python evaluate.py --pallet_length 1100 --pallet_width 1100 --pallet_height 1800
+python train.py --data my_order.json \
+    --pallet_length 1200 --pallet_width 1000 \
+    --pallet_height 1150 --max_weight 1500
 ```
 
-Pass the same kwargs into `PalletPackingEnv(...)` in `train.py` if you change pallet size for training. Singapore commonly uses 1100 × 1100 mm ISO pallets, so swap as needed.
+Input JSON format:
 
-Grid resolution lives in `pallet_env.py` (default 20 mm). Lower it to 10 mm for thin items at the cost of a 4× larger action space. Items get rounded up to the nearest cell so a 21.6 mm wide item occupies 2 cells at 20 mm resolution (40 mm slot).
+```json
+{
+  "items": [
+    {
+      "sku": "C-BTA073V650G3ECE",
+      "quantity": 10,
+      "length_mm": 430,
+      "width_mm": 216,
+      "height_mm": 250,
+      "weight_kg": 0.165
+    }
+  ]
+}
+```
 
-## Expected results
+---
 
-For your 117 item dataset (2.153 m³ total) the theoretical minimum is 2 pallets. The First Fit Decreasing baseline reaches 3 pallets at 49.8% average utilisation. A trained MaskablePPO agent at 500K steps should match or beat this, typically 2 or 3 pallets at 55 to 75% utilisation depending on hyperparameters and reward weighting.
+## Architecture
 
-## Notes and limitations
+### Observation space
 
-The current support rule requires a fully flat footprint underneath the item. Real pallets often allow partial overhang, which would let the agent pack more densely. To relax this, edit `_check_placement` in `pallet_env.py` to require, for example, at least 80% of the footprint cells at the base height.
+| Key | Shape | Description |
+|---|---|---|
+| `heightmap` | (60, 55) | Rasterised top-surface heights, normalised to [0, 1] |
+| `ep_obs` | (50, 4) | EP candidates: x, y, z normalised + valid flag |
+| `item` | (4,) | Next item: l, w, h, weight normalised |
+| `progress` | (2,) | Fraction placed, pallet count norm |
 
-The env enforces axis aligned placement and 90 degree horizontal rotation only. Adding vertical rotation (6 orientations total) means swapping height with length or width, which is realistic for some items but unsafe for others (anything fragile, liquid, or "this way up"). Add a per item `allow_rotation` flag if you need that.
+### Action space
 
-The agent is trained on a single instance (your 117 items in fixed sorted order). To generalise across orders, randomise quantities and SKU mix in a `make_env` factory before training.
+`Discrete(300)` -- decoded as `ep_idx * 6 + rot`.
+
+EP index 0 is always the psatops-optimal position (lowest z, then x, then y).
+The agent learns to follow or override it based on global context.
+
+### Reward
+
+| Event | Reward |
+|---|---|
+| Place item | `(item_vol / pallet_vol) * 20` |
+| Low placement bonus | `(1 - z / H) * 0.3` |
+| Open new pallet | `-5` |
+| Skip item (oversized) | `-15` |
+| Terminal | `util * 50 - n_pallets * 3` |
+
+### Hyperparameters
+
+| Param | Value | Rationale |
+|---|---|---|
+| `n_steps` | 1024 | Longer rollouts reduce per-update overhead |
+| `batch_size` | 256 | Larger batches for stable gradients |
+| `n_epochs` | 5 | Sufficient with small action space |
+| `gamma` | 0.995 | High discount for 117-step episodes |
+| `ent_coef` | 0.005 | Lower exploration needed vs v1 |
+| `lr` | 3e-4 -> 3e-5 | Linear decay |
+
+---
+
+## Files
+
+```
+pallet_env.py   Environment (psatops-aligned, vectorised masks)
+train.py        MaskablePPO training script
+evaluate.py     Baselines + trained agent comparison + 3D plots
+data.json       Sample order (117 items, 6 SKUs)
+```

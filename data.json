@@ -1,302 +1,62 @@
 {
   "items": [
     {
-      "sku": "C-BTA073V650G3ECE",
-      "quantity": 23,
-      "length_mm": 21.67,
-      "width_mm": 430,
-      "height_mm": 250,
-      "weight_kg": 0.165,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH15-GCE",
-      "quantity": 8,
-      "length_mm": 520,
-      "width_mm": 380,
-      "height_mm": 230,
-      "weight_kg": 0.13133,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "G-DIA-ELH17-GCE",
-      "quantity": 9,
-      "length_mm": 540,
-      "width_mm": 400,
-      "height_mm": 230,
-      "weight_kg": 0.13133,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH19-GCE",
-      "quantity": 2,
-      "length_mm": 540,
-      "width_mm": 400,
-      "height_mm": 9.6,
-      "weight_kg": 0.13133,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH21-GCE",
-      "quantity": 4,
-      "length_mm": 14.17,
-      "width_mm": 410,
-      "height_mm": 240,
-      "weight_kg": 0.13133,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "C-PN2525TW-EAU",
-      "quantity": 1,
-      "length_mm": 0.07,
-      "width_mm": 350,
-      "height_mm": 470,
-      "weight_kg": 0.025,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV525HCW30NBECE",
-      "quantity": 3,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.015,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV625HCW30NBECE",
-      "quantity": 1,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.016,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "C-PN2125TW-ECE",
-      "quantity": 1,
-      "length_mm": 0.06,
-      "width_mm": 470,
-      "height_mm": 400,
-      "weight_kg": 0.021,
-      "store": "BP2",
-      "dc": "SG"
-    },
-    {
-      "sku": "C-BTA073V650G3ECE",
-      "quantity": 26,
-      "length_mm": 21.67,
-      "width_mm": 430,
-      "height_mm": 250,
-      "weight_kg": 0.165,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "G-DIA-ELH13-GCE",
-      "quantity": 1,
-      "length_mm": 520,
-      "width_mm": 370,
-      "height_mm": 230,
-      "weight_kg": 0.006,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH15-GCE",
-      "quantity": 5,
-      "length_mm": 520,
-      "width_mm": 380,
-      "height_mm": 230,
-      "weight_kg": 0.13133,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "G-DIA-ELH17-GCE",
-      "quantity": 7,
-      "length_mm": 540,
-      "width_mm": 400,
-      "height_mm": 230,
-      "weight_kg": 0.13133,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "G-DIA-ELH19-GCE",
-      "quantity": 4,
-      "length_mm": 540,
-      "width_mm": 400,
-      "height_mm": 9.6,
-      "weight_kg": 0.13133,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "G-DIA-ELH21-GCE",
-      "quantity": 6,
-      "length_mm": 14.17,
-      "width_mm": 410,
-      "height_mm": 240,
-      "weight_kg": 0.13133,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV425HCW30NBECE",
-      "quantity": 1,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.014,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV525HCW30NBECE",
-      "quantity": 3,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.015,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV625HCW30NBECE",
-      "quantity": 1,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.016,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV725HCW30NBECE",
-      "quantity": 1,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.017,
-      "store": "BP1",
-      "dc": "SG"
-    },
-    {
-      "sku": "C-BTA073V650G3ECE",
+      "sku": "test01-01",
       "quantity": 67,
-      "length_mm": 21.67,
-      "width_mm": 430,
-      "height_mm": 250,
+      "length_mm": 430,
+      "width_mm": 21.6,
+      "height_mm": 250.0,
       "weight_kg": 0.165,
       "store": "TPH",
       "dc": "SG"
     },
     {
-      "sku": "A-DIA-ELH13-GCE",
-      "quantity": 3,
-      "length_mm": 520,
-      "width_mm": 370,
-      "height_mm": 230,
-      "weight_kg": 0.006,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH15-GCE",
-      "quantity": 22,
-      "length_mm": 520,
-      "width_mm": 380,
-      "height_mm": 230,
-      "weight_kg": 0.13133,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "G-DIA-ELH17-GCE",
-      "quantity": 19,
-      "length_mm": 540,
-      "width_mm": 400,
-      "height_mm": 230,
-      "weight_kg": 0.13133,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH19-GCE",
-      "quantity": 5,
-      "length_mm": 540,
-      "width_mm": 400,
-      "height_mm": 9.6,
-      "weight_kg": 0.13133,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "A-DIA-ELH21-GCE",
-      "quantity": 4,
-      "length_mm": 14.17,
-      "width_mm": 410,
-      "height_mm": 240,
-      "weight_kg": 0.13133,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV425HCW30NBECE",
-      "quantity": 1,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.014,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV525HCW30NBECE",
-      "quantity": 8,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.015,
-      "store": "TPH",
-      "dc": "SG"
-    },
-    {
-      "sku": "I-AV625HCW30NBECE",
+      "sku": "test01-02",
       "quantity": 2,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.016,
+      "length_mm": 370,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.06,
       "store": "TPH",
       "dc": "SG"
     },
     {
-      "sku": "I-AV725HCW30NBECE",
-      "quantity": 1,
-      "length_mm": 1.16,
-      "width_mm": 430,
-      "height_mm": 310,
-      "weight_kg": 0.017,
+      "sku": "test01-03",
+      "quantity": 22,
+      "length_mm": 380,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131,
       "store": "TPH",
       "dc": "SG"
     },
     {
-      "sku": "C-PN2125TW-ECE",
-      "quantity": 1,
-      "length_mm": 0.06,
-      "width_mm": 470,
-      "height_mm": 400,
-      "weight_kg": 0.021,
+      "sku": "test01-04",
+      "quantity": 18,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131,
+      "store": "TPH",
+      "dc": "SG"
+    },
+    {
+      "sku": "test01-05",
+      "quantity": 5,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 9.6,
+      "weight_kg": 0.131,
+      "store": "TPH",
+      "dc": "SG"
+    },
+    {
+      "sku": "test01-06",
+      "quantity": 3,
+      "length_mm": 410,
+      "width_mm": 14.1,
+      "height_mm": 240.0,
+      "weight_kg": 0.131,
       "store": "TPH",
       "dc": "SG"
     }
