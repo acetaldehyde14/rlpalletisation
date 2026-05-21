@@ -30,7 +30,8 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from pallet_env import (
     PalletPackingEnv, expand_items,
     get_rotation_dims, support_fraction,
-    NUM_ROTATIONS, K_EP, SUPPORT_THRESHOLD,
+    NUM_ROTATIONS, SUPPORT_THRESHOLD,
+    PlacedBox, ROTATION_LABELS,
 )
 
 
@@ -153,41 +154,141 @@ def run_first_fit(items, env_kwargs) -> PalletPackingEnv:
     return env
 
 
+def _new_result_pallet():
+    return {
+        "boxes": [],
+        "placements": [],
+        "used_volume": 0.0,
+        "used_weight": 0.0,
+    }
+
+
+def _generate_eps(pallet_l, pallet_w, pallet_h, boxes):
+    eps_b = 0.01
+    seen = set()
+    pts = []
+
+    def add(xv, yv, zv):
+        if xv > pallet_l + eps_b or yv > pallet_w + eps_b or zv > pallet_h + eps_b:
+            return
+        key = (round(xv * 100), round(yv * 100), round(zv * 100))
+        if key not in seen:
+            seen.add(key)
+            pts.append((xv, yv, zv))
+
+    add(0., 0., 0.)
+    for b in boxes:
+        add(b.x + b.l, b.y, b.z)
+        add(b.x, b.y + b.w, b.z)
+        add(b.x, b.y, b.z + b.h)
+
+    pts.sort(key=lambda p: (p[2], p[0], p[1]))
+    return pts
+
+
+def _can_place(pallet, x, y, z, l, w, h, weight,
+               pallet_l, pallet_w, pallet_h, max_weight):
+    EPS = 1.0
+
+    if x + l > pallet_l + EPS: return False
+    if y + w > pallet_w + EPS: return False
+    if z + h > pallet_h + EPS: return False
+    if pallet["used_weight"] + weight > max_weight + 0.001: return False
+
+    for b in pallet["boxes"]:
+        if (x < b.x + b.l - EPS and x + l > b.x + EPS and
+            y < b.y + b.w - EPS and y + w > b.y + EPS and
+            z < b.z + b.h - EPS and z + h > b.z + EPS):
+            return False
+
+    if z > 1.0:
+        base_area = l * w
+        if base_area < 1e-6:
+            return False
+        supported = 0.0
+        for b in pallet["boxes"]:
+            if abs((b.z + b.h) - z) < 1.0:
+                ox = min(x + l, b.x + b.l) - max(x, b.x)
+                oy = min(y + w, b.y + b.w) - max(y, b.y)
+                if ox > 0 and oy > 0:
+                    supported += ox * oy
+        if supported / base_area < 0.70:
+            return False
+
+    return True
+
+
+def _place_box_ep(pallet, item, pallet_l, pallet_w, pallet_h, max_weight):
+    points = _generate_eps(pallet_l, pallet_w, pallet_h, pallet["boxes"])
+
+    rotations = list(range(NUM_ROTATIONS))
+    base_areas = [get_rotation_dims(item, r)[0] * get_rotation_dims(item, r)[1]
+                  for r in rotations]
+    max_base = max(base_areas)
+    primary = [r for r, a in zip(rotations, base_areas) if abs(a - max_base) < 1e-6]
+    fallback = [r for r in rotations if r not in primary]
+
+    for rot_group in [primary, fallback]:
+        best = None
+        best_score = float("inf")
+
+        for pt in points:
+            x, y, z = pt
+            for rot in rot_group:
+                fp_l, fp_w, stack_h = get_rotation_dims(item, rot)
+                if not _can_place(pallet, x, y, z, fp_l, fp_w, stack_h,
+                                  item.weight, pallet_l, pallet_w,
+                                  pallet_h, max_weight):
+                    continue
+                score = z * 1000.0 + x + y
+                if score < best_score:
+                    best_score = score
+                    best = (x, y, z, fp_l, fp_w, stack_h, rot)
+
+        if best is not None:
+            x, y, z, fp_l, fp_w, stack_h, rot = best
+            box = PlacedBox(x=x, y=y, z=z, l=fp_l, w=fp_w, h=stack_h,
+                            weight=item.weight, sku=item.sku,
+                            rotation=rot, rotation_label=ROTATION_LABELS[rot])
+            pallet["boxes"].append(box)
+            pallet["used_volume"] += item.length * item.width * item.height
+            pallet["used_weight"] += item.weight
+            pallet["placements"].append({
+                "item": item, "x_mm": x, "y_mm": y, "z_mm": z,
+                "l_mm": fp_l, "w_mm": fp_w, "h_mm": stack_h,
+                "rotation": rot, "rotation_label": ROTATION_LABELS[rot],
+            })
+            return True
+
+    return False
+
+
 def run_extreme_point(items, env_kwargs) -> PalletPackingEnv:
-    """
-    Greedy psatops-style Extreme Point:
-    pick (ep, rot) with lowest score  z * 1000 + x + y.
-    Matching ScoringUtils.scoreCandidate dominant term (no CG, no base preference).
-    """
+    """Faithful port of psatops ExtremePointAlgorithm."""
+    pallet_length = env_kwargs["pallet_length"]
+    pallet_width = env_kwargs["pallet_width"]
+    pallet_height = env_kwargs["pallet_height"]
+    max_weight = env_kwargs["max_pallet_weight"]
+
+    sorted_items = sorted(items, key=lambda it: -(it.length * it.width * it.height))
+
+    pallets = [_new_result_pallet()]
+
+    for item in sorted_items:
+        placed = False
+        for pallet in pallets:
+            if _place_box_ep(pallet, item, pallet_length, pallet_width,
+                             pallet_height, max_weight):
+                placed = True
+                break
+        if not placed:
+            pallets.append(_new_result_pallet())
+            _place_box_ep(pallets[-1], item, pallet_length, pallet_width,
+                         pallet_height, max_weight)
+
     env = PalletPackingEnv(items, **env_kwargs, sort_items=True)
     env.reset()
-
-    while env.current_idx < env.total_items:
-        masks = env.action_masks()
-        valid = np.where(masks)[0]
-        if valid.size == 0:
-            break
-
-        item   = env._current_item()
-        pallet = env.pallets[-1]
-
-        best_action = int(valid[0])
-        best_score  = float("inf")
-
-        for action in valid:
-            ep_idx = int(action) // NUM_ROTATIONS
-            rot    = int(action) % NUM_ROTATIONS
-            result = env._check_ep(pallet, item, ep_idx, rot)
-            if result is None:
-                continue
-            x, y, z, fp_l, fp_w, stack_h = result
-            # psatops ScoringUtils.scoreCandidate: z*1000 + x + y
-            score = z * 1000.0 + x + y
-            if score < best_score:
-                best_score  = score
-                best_action = int(action)
-
-        env.step(best_action)
+    env.pallets = pallets
     return env
 
 

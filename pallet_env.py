@@ -149,7 +149,7 @@ class PalletPackingEnv(gym.Env):
         pallet_width:    float = 1100.0,
         pallet_height:   float = 1150.0,
         max_pallet_weight: float = 1500.0,
-        grid_resolution: float = 20.0,
+        grid_resolution: float = 5.0,
         new_pallet_penalty:      float = 5.0,
         final_utilization_bonus: float = 50.0,
         pallet_count_penalty:    float = 3.0,

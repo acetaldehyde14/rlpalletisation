@@ -72,13 +72,14 @@ def linear_schedule(initial_lr: float) -> Callable[[float], float]:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data",         default="data.json")
+    parser.add_argument("--data",         nargs="+",
+                        default=["data.json", "data_old.json"])
     parser.add_argument("--timesteps",    type=int,   default=500_000)
     parser.add_argument("--n_envs",       type=int,   default=4)
     parser.add_argument("--save_dir",     default="./checkpoints")
     parser.add_argument("--log_dir",      default="./logs")
     parser.add_argument("--lr",           type=float, default=3e-4,
-                        help="Initial learning rate (linearly decayed to 10%)")
+                        help="Initial learning rate (linearly decayed to 10%%)")
     parser.add_argument("--n_steps",      type=int,   default=1024,
                         help="Steps per env per update (larger = more data, less overhead)")
     parser.add_argument("--batch_size",   type=int,   default=256)
@@ -99,16 +100,22 @@ def main():
     Path(args.save_dir).mkdir(parents=True, exist_ok=True)
     Path(args.log_dir).mkdir(parents=True, exist_ok=True)
 
-    env_kwargs = dict(
-        data_path=args.data,
+    data_paths = args.data
+    n_datasets = len(data_paths)
+    print(f"Training on {n_datasets} dataset(s): {data_paths}")
+
+    base_kwargs = dict(
         pallet_length=args.pallet_length,
         pallet_width=args.pallet_width,
         pallet_height=args.pallet_height,
         max_weight=args.max_weight,
     )
 
-    env_fns  = [_make_env(**env_kwargs, seed=i) for i in range(args.n_envs)]
-    eval_fns = [_make_env(**env_kwargs, seed=999)]
+    env_fns = [
+        _make_env(data_path=data_paths[i % n_datasets], seed=i, **base_kwargs)
+        for i in range(args.n_envs)
+    ]
+    eval_fns = [_make_env(data_path=data_paths[0], seed=999, **base_kwargs)]
 
     vec_cls = SubprocVecEnv if (args.subproc and args.n_envs > 1) else DummyVecEnv
     env      = vec_cls(env_fns)
