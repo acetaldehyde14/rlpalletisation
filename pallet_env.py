@@ -150,6 +150,7 @@ class PalletPackingEnv(gym.Env):
         pallet_height:   float = 1150.0,
         max_pallet_weight: float = 1500.0,
         grid_resolution: float = 5.0,
+        num_rotations: int = 6,
         new_pallet_penalty:      float = 5.0,
         final_utilization_bonus: float = 50.0,
         pallet_count_penalty:    float = 3.0,
@@ -164,6 +165,7 @@ class PalletPackingEnv(gym.Env):
         self.pallet_height = float(pallet_height)
         self.max_pallet_weight  = float(max_pallet_weight)
         self.grid_resolution    = float(grid_resolution)
+        self.num_rotations      = int(num_rotations)
         self.new_pallet_penalty      = new_pallet_penalty
         self.final_utilization_bonus = final_utilization_bonus
         self.pallet_count_penalty    = pallet_count_penalty
@@ -175,7 +177,7 @@ class PalletPackingEnv(gym.Env):
         self.grid_w = int(self.pallet_width  // self.grid_resolution)
         self.pallet_volume = self.pallet_length * self.pallet_width * self.pallet_height
 
-        self.action_space = spaces.Discrete(K_EP * NUM_ROTATIONS)
+        self.action_space = spaces.Discrete(K_EP * self.num_rotations)
         self.observation_space = spaces.Dict({
             "heightmap": spaces.Box(0., 1., (self.grid_l, self.grid_w), np.float32),
             "ep_obs":    spaces.Box(-0.1, 1., (K_EP, 4),               np.float32),
@@ -321,7 +323,7 @@ class PalletPackingEnv(gym.Env):
             bl = ba[:,3]; bw = ba[:,4]; bh = ba[:,5]
             tops = bz + bh
 
-        for rot in range(NUM_ROTATIONS):
+        for rot in range(self.num_rotations):
             fp_l, fp_w, stack_h = get_rotation_dims(item, rot)
 
             # 1. Bounds
@@ -363,7 +365,7 @@ class PalletPackingEnv(gym.Env):
                     ok[m[sf < SUPPORT_THRESHOLD]] = False
 
             if ok.any():
-                mask[v_idx[ok] * NUM_ROTATIONS + rot] = True
+                mask[v_idx[ok] * self.num_rotations + rot] = True
 
         if not mask.any():
             mask[:] = True
@@ -424,8 +426,8 @@ class PalletPackingEnv(gym.Env):
         if item is None:
             return self._get_obs(), 0., True, False, info
 
-        ep_idx = int(action) // NUM_ROTATIONS
-        rot    = int(action) % NUM_ROTATIONS
+        ep_idx = int(action) // self.num_rotations
+        rot    = int(action) % self.num_rotations
         pallet = self.pallets[-1]
         result = self._check_ep(pallet, item, ep_idx, rot)
         reward = 0.
@@ -434,7 +436,7 @@ class PalletPackingEnv(gym.Env):
             self.pallets.append(self._new_pallet())
             pallet = self.pallets[-1]
             reward -= self.new_pallet_penalty
-            for try_rot in range(NUM_ROTATIONS):
+            for try_rot in range(self.num_rotations):
                 cand = self._check_ep(pallet, item, 0, try_rot)
                 if cand is not None:
                     rot = try_rot; ep_idx = 0; result = cand; break

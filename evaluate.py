@@ -218,10 +218,11 @@ def _can_place(pallet, x, y, z, l, w, h, weight,
     return True
 
 
-def _place_box_ep(pallet, item, pallet_l, pallet_w, pallet_h, max_weight):
+def _place_box_ep(pallet, item, pallet_l, pallet_w, pallet_h, max_weight,
+                   num_rotations=6):
     points = _generate_eps(pallet_l, pallet_w, pallet_h, pallet["boxes"])
 
-    rotations = list(range(NUM_ROTATIONS))
+    rotations = list(range(num_rotations))
     base_areas = [get_rotation_dims(item, r)[0] * get_rotation_dims(item, r)[1]
                   for r in rotations]
     max_base = max(base_areas)
@@ -263,7 +264,7 @@ def _place_box_ep(pallet, item, pallet_l, pallet_w, pallet_h, max_weight):
     return False
 
 
-def run_extreme_point(items, env_kwargs) -> PalletPackingEnv:
+def run_extreme_point(items, env_kwargs, num_rotations=6) -> PalletPackingEnv:
     """Faithful port of psatops ExtremePointAlgorithm."""
     pallet_length = env_kwargs["pallet_length"]
     pallet_width = env_kwargs["pallet_width"]
@@ -278,13 +279,13 @@ def run_extreme_point(items, env_kwargs) -> PalletPackingEnv:
         placed = False
         for pallet in pallets:
             if _place_box_ep(pallet, item, pallet_length, pallet_width,
-                             pallet_height, max_weight):
+                             pallet_height, max_weight, num_rotations):
                 placed = True
                 break
         if not placed:
             pallets.append(_new_result_pallet())
             _place_box_ep(pallets[-1], item, pallet_length, pallet_width,
-                         pallet_height, max_weight)
+                         pallet_height, max_weight, num_rotations)
 
     env = PalletPackingEnv(items, **env_kwargs, sort_items=True)
     env.reset()
@@ -293,16 +294,26 @@ def run_extreme_point(items, env_kwargs) -> PalletPackingEnv:
 
 
 # ── RL agent runner ────────────────────────────────────────────────────────────
-def run_agent(model, items, env_kwargs) -> PalletPackingEnv:
+def run_agent(model, items, env_kwargs, label="RL agent") -> PalletPackingEnv:
+    from sb3_contrib import MaskablePPO
     from sb3_contrib.common.wrappers import ActionMasker
 
+    is_masked = isinstance(model, MaskablePPO)
     base_env = PalletPackingEnv(items, **env_kwargs, sort_items=True)
-    wrapped  = ActionMasker(base_env, lambda e: e.action_masks())
-    obs, _   = wrapped.reset()
+
+    if is_masked:
+        wrapped = ActionMasker(base_env, lambda e: e.action_masks())
+    else:
+        wrapped = base_env
+
+    obs, _ = wrapped.reset()
     done = False
     while not done:
-        masks = wrapped.action_masks()
-        action, _ = model.predict(obs, action_masks=masks, deterministic=True)
+        if is_masked:
+            masks = wrapped.action_masks()
+            action, _ = model.predict(obs, action_masks=masks, deterministic=True)
+        else:
+            action, _ = model.predict(obs, deterministic=True)
         obs, _, terminated, truncated, _ = wrapped.step(int(action))
         done = terminated or truncated
     return base_env
@@ -312,8 +323,11 @@ def run_agent(model, items, env_kwargs) -> PalletPackingEnv:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data",          default="data.json")
-    parser.add_argument("--model",         default="./checkpoints/best_model.zip")
+    parser.add_argument("--model",         nargs="+",
+                        default=["checkpoints/maskable_ppo/best_model.zip"])
     parser.add_argument("--baseline_only", action="store_true")
+    parser.add_argument("--rotations",     type=int,   default=6,
+                        help="Number of box rotations (2 or 6)")
     parser.add_argument("--pallet_length", type=float, default=1200.0)
     parser.add_argument("--pallet_width",  type=float, default=1100.0)
     parser.add_argument("--pallet_height", type=float, default=1150.0)
@@ -329,38 +343,51 @@ def main():
         pallet_width=args.pallet_width,
         pallet_height=args.pallet_height,
         max_pallet_weight=args.max_weight,
+        num_rotations=args.rotations,
     )
 
     total_vol  = sum(it.length * it.width * it.height for it in items) / 1e9
     pallet_vol = args.pallet_length * args.pallet_width * args.pallet_height / 1e9
-    print(f"Loaded {len(items)} items from {args.data}")
+    print(f"Loaded {len(items)} items from {args.data}  |  rotations={args.rotations}")
     print(f"Total item volume   {total_vol:.3f} m^3")
     print(f"Pallet capacity     {pallet_vol:.3f} m^3")
     print(f"Theoretical min     {int(np.ceil(total_vol / pallet_vol))} pallets")
 
-    # First Fit Decreasing baseline
     ff_env = run_first_fit(items, env_kwargs)
     report(ff_env, "First Fit Decreasing")
     visualize(ff_env, "First Fit Decreasing", "ff_result.png")
 
-    # Extreme Point baseline (psatops-style)
-    ep_env = run_extreme_point(items, env_kwargs)
+    ep_env = run_extreme_point(items, env_kwargs, num_rotations=args.rotations)
     report(ep_env, "Extreme Point (psatops-style)")
     visualize(ep_env, "Extreme Point (psatops-style)", "ep_result.png")
 
     if args.baseline_only:
         return
 
-    if not Path(args.model).exists():
-        print(f"\nModel not found at {args.model}.")
-        print("Run train.py first, or pass --baseline_only.")
-        return
-
     from sb3_contrib import MaskablePPO
-    model     = MaskablePPO.load(args.model)
-    agent_env = run_agent(model, items, env_kwargs)
-    report(agent_env, "MaskablePPO RL agent")
-    visualize(agent_env, "MaskablePPO RL agent", "agent_result.png")
+    from stable_baselines3 import DQN, A2C
+
+    for model_path in args.model:
+        model_path = Path(model_path)
+        if not model_path.exists():
+            print(f"\nModel not found at {model_path}, skipping.")
+            continue
+
+        algo_name = model_path.parent.name if model_path.parent.name in (
+            "maskable_ppo", "dqn", "a2c") else model_path.stem
+
+        if "dqn" in algo_name:
+            model = DQN.load(model_path)
+        elif "a2c" in algo_name:
+            model = A2C.load(model_path)
+        else:
+            model = MaskablePPO.load(model_path)
+
+        label = f"{type(model).__name__} ({algo_name})"
+        out_png = f"{algo_name}_result.png"
+        agent_env = run_agent(model, items, env_kwargs, label=label)
+        report(agent_env, label)
+        visualize(agent_env, label, out_png)
 
 
 if __name__ == "__main__":
