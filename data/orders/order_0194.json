@@ -1,44 +1,44 @@
 {
   "items": [
     {
-      "sku": "WF-L",
-      "quantity": 7,
-      "length_mm": 850,
-      "width_mm": 650,
-      "height_mm": 150,
-      "weight_kg": 1.5
+      "sku": "FP-M",
+      "quantity": 51,
+      "length_mm": 430,
+      "width_mm": 22,
+      "height_mm": 250,
+      "weight_kg": 0.165
     },
     {
-      "sku": "HV-S",
-      "quantity": 7,
-      "length_mm": 250,
-      "width_mm": 200,
+      "sku": "FP-XS",
+      "quantity": 43,
+      "length_mm": 300,
+      "width_mm": 15,
       "height_mm": 180,
-      "weight_kg": 3.0
-    },
-    {
-      "sku": "WF-S",
-      "quantity": 39,
-      "length_mm": 550,
-      "width_mm": 460,
-      "height_mm": 80,
-      "weight_kg": 0.5
-    },
-    {
-      "sku": "TN-M",
-      "quantity": 11,
-      "length_mm": 240,
-      "width_mm": 220,
-      "height_mm": 560,
-      "weight_kg": 1.1
+      "weight_kg": 0.08
     },
     {
       "sku": "FP-XL",
-      "quantity": 60,
+      "quantity": 23,
       "length_mm": 580,
       "width_mm": 28,
       "height_mm": 330,
       "weight_kg": 0.3
+    },
+    {
+      "sku": "FP-L",
+      "quantity": 9,
+      "length_mm": 500,
+      "width_mm": 25,
+      "height_mm": 290,
+      "weight_kg": 0.22
+    },
+    {
+      "sku": "FP-S",
+      "quantity": 20,
+      "length_mm": 380,
+      "width_mm": 20,
+      "height_mm": 220,
+      "weight_kg": 0.12
     }
   ]
 }

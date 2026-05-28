@@ -1,36 +1,44 @@
 {
   "items": [
     {
-      "sku": "FP-XL",
-      "quantity": 57,
-      "length_mm": 580,
-      "width_mm": 28,
-      "height_mm": 330,
-      "weight_kg": 0.3
+      "sku": "WF-S",
+      "quantity": 28,
+      "length_mm": 550,
+      "width_mm": 460,
+      "height_mm": 80,
+      "weight_kg": 0.5
     },
     {
-      "sku": "FP-M",
-      "quantity": 4,
-      "length_mm": 430,
-      "width_mm": 22,
-      "height_mm": 250,
-      "weight_kg": 0.165
+      "sku": "FP-L",
+      "quantity": 46,
+      "length_mm": 500,
+      "width_mm": 25,
+      "height_mm": 290,
+      "weight_kg": 0.22
     },
     {
-      "sku": "FP-S",
-      "quantity": 56,
-      "length_mm": 380,
-      "width_mm": 20,
-      "height_mm": 220,
-      "weight_kg": 0.12
-    },
-    {
-      "sku": "CU-M",
-      "quantity": 32,
-      "length_mm": 200,
+      "sku": "HV-S",
+      "quantity": 33,
+      "length_mm": 250,
       "width_mm": 200,
+      "height_mm": 180,
+      "weight_kg": 3.0
+    },
+    {
+      "sku": "RD-S",
+      "quantity": 20,
+      "length_mm": 340,
+      "width_mm": 12,
       "height_mm": 200,
-      "weight_kg": 0.8
+      "weight_kg": 0.09
+    },
+    {
+      "sku": "SH-L",
+      "quantity": 44,
+      "length_mm": 480,
+      "width_mm": 620,
+      "height_mm": 12,
+      "weight_kg": 0.2
     }
   ]
 }

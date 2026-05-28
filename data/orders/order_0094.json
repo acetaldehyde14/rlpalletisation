@@ -2,27 +2,27 @@
   "items": [
     {
       "sku": "CU-M",
-      "quantity": 39,
+      "quantity": 35,
       "length_mm": 200,
       "width_mm": 200,
       "height_mm": 200,
       "weight_kg": 0.8
     },
     {
-      "sku": "CU-S",
-      "quantity": 49,
-      "length_mm": 120,
-      "width_mm": 120,
-      "height_mm": 120,
-      "weight_kg": 0.25
+      "sku": "TN-L",
+      "quantity": 34,
+      "length_mm": 300,
+      "width_mm": 260,
+      "height_mm": 650,
+      "weight_kg": 1.8
     },
     {
-      "sku": "CU-L",
-      "quantity": 36,
-      "length_mm": 280,
-      "width_mm": 280,
-      "height_mm": 280,
-      "weight_kg": 1.8
+      "sku": "FP-L",
+      "quantity": 14,
+      "length_mm": 500,
+      "width_mm": 25,
+      "height_mm": 290,
+      "weight_kg": 0.22
     }
   ]
 }

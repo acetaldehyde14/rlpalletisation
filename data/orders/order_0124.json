@@ -2,7 +2,7 @@
   "items": [
     {
       "sku": "C-BTA073V650G3ECE",
-      "quantity": 117,
+      "quantity": 48,
       "length_mm": 430,
       "width_mm": 21.6,
       "height_mm": 250.0,
@@ -18,7 +18,7 @@
     },
     {
       "sku": "A-DIA-ELH15-GCE",
-      "quantity": 12,
+      "quantity": 11,
       "length_mm": 380,
       "width_mm": 520.0,
       "height_mm": 230.0,
@@ -26,7 +26,7 @@
     },
     {
       "sku": "G-DIA-ELH17-GCE",
-      "quantity": 10,
+      "quantity": 13,
       "length_mm": 400,
       "width_mm": 540.0,
       "height_mm": 230.0,
@@ -34,7 +34,7 @@
     },
     {
       "sku": "A-DIA-ELH19-GCE",
-      "quantity": 8,
+      "quantity": 3,
       "length_mm": 400,
       "width_mm": 540.0,
       "height_mm": 9.6,
@@ -42,7 +42,7 @@
     },
     {
       "sku": "A-DIA-ELH21-GCE",
-      "quantity": 4,
+      "quantity": 2,
       "length_mm": 410,
       "width_mm": 14.1,
       "height_mm": 240.0,

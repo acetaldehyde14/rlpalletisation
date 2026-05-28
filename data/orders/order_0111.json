@@ -1,8 +1,16 @@
 {
   "items": [
     {
+      "sku": "FP-M",
+      "quantity": 43,
+      "length_mm": 430,
+      "width_mm": 22,
+      "height_mm": 250,
+      "weight_kg": 0.165
+    },
+    {
       "sku": "SM-B",
-      "quantity": 6,
+      "quantity": 52,
       "length_mm": 130,
       "width_mm": 100,
       "height_mm": 80,
@@ -10,51 +18,35 @@
     },
     {
       "sku": "FP-S",
-      "quantity": 34,
+      "quantity": 23,
       "length_mm": 380,
       "width_mm": 20,
       "height_mm": 220,
       "weight_kg": 0.12
     },
     {
-      "sku": "CB-S",
-      "quantity": 23,
-      "length_mm": 300,
-      "width_mm": 380,
-      "height_mm": 180,
-      "weight_kg": 0.4
+      "sku": "FP-XL",
+      "quantity": 54,
+      "length_mm": 580,
+      "width_mm": 28,
+      "height_mm": 330,
+      "weight_kg": 0.3
     },
     {
       "sku": "CU-L",
-      "quantity": 2,
+      "quantity": 10,
       "length_mm": 280,
       "width_mm": 280,
       "height_mm": 280,
       "weight_kg": 1.8
     },
     {
-      "sku": "CB-L",
-      "quantity": 8,
-      "length_mm": 420,
-      "width_mm": 560,
-      "height_mm": 260,
-      "weight_kg": 1.0
-    },
-    {
-      "sku": "WF-S",
-      "quantity": 33,
-      "length_mm": 550,
-      "width_mm": 460,
-      "height_mm": 80,
-      "weight_kg": 0.5
-    },
-    {
-      "sku": "SM-C",
-      "quantity": 8,
-      "length_mm": 160,
-      "width_mm": 130,
-      "height_mm": 110,
-      "weight_kg": 0.15
+      "sku": "FP-L",
+      "quantity": 44,
+      "length_mm": 500,
+      "width_mm": 25,
+      "height_mm": 290,
+      "weight_kg": 0.22
     }
   ]
 }

@@ -1,36 +1,45 @@
 {
+  "order_id": "TOPS-CASE2",
   "items": [
     {
-      "sku": "WF-L",
-      "quantity": 18,
-      "length_mm": 850,
-      "width_mm": 650,
-      "height_mm": 150,
-      "weight_kg": 1.5
+      "sku": "C-BTA073V650G3ECE",
+      "quantity": 26,
+      "length_mm": 430,
+      "width_mm": 21.6,
+      "height_mm": 250.0,
+      "weight_kg": 0.165
     },
     {
-      "sku": "CU-S",
-      "quantity": 40,
-      "length_mm": 120,
-      "width_mm": 120,
-      "height_mm": 120,
-      "weight_kg": 0.25
+      "sku": "G-DIA-ELH15-GCE",
+      "quantity": 5,
+      "length_mm": 370,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.006
     },
     {
-      "sku": "SH-S",
-      "quantity": 20,
-      "length_mm": 330,
-      "width_mm": 460,
-      "height_mm": 8,
-      "weight_kg": 0.07
+      "sku": "G-DIA-ELH17-GCE",
+      "quantity": 7,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131
     },
     {
-      "sku": "TN-S",
-      "quantity": 8,
-      "length_mm": 180,
-      "width_mm": 160,
-      "height_mm": 440,
-      "weight_kg": 0.6
+      "sku": "G-DIA-ELH19-GCE",
+      "quantity": 4,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 9.6,
+      "weight_kg": 0.131
+    },
+    {
+      "sku": "G-DIA-ELH21-GCE",
+      "quantity": 6,
+      "length_mm": 410,
+      "width_mm": 14.1,
+      "height_mm": 240.0,
+      "weight_kg": 0.131
     }
   ]
 }

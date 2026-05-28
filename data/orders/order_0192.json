@@ -1,28 +1,36 @@
 {
   "items": [
     {
-      "sku": "TN-M",
-      "quantity": 10,
-      "length_mm": 240,
-      "width_mm": 220,
-      "height_mm": 560,
-      "weight_kg": 1.1
+      "sku": "CB-S",
+      "quantity": 33,
+      "length_mm": 300,
+      "width_mm": 380,
+      "height_mm": 180,
+      "weight_kg": 0.4
     },
     {
-      "sku": "FP-XL",
-      "quantity": 32,
-      "length_mm": 580,
-      "width_mm": 28,
-      "height_mm": 330,
-      "weight_kg": 0.3
+      "sku": "CB-M",
+      "quantity": 20,
+      "length_mm": 370,
+      "width_mm": 520,
+      "height_mm": 230,
+      "weight_kg": 0.7
     },
     {
-      "sku": "RD-L",
-      "quantity": 44,
-      "length_mm": 500,
-      "width_mm": 18,
-      "height_mm": 270,
-      "weight_kg": 0.18
+      "sku": "CB-XL",
+      "quantity": 18,
+      "length_mm": 480,
+      "width_mm": 600,
+      "height_mm": 290,
+      "weight_kg": 1.4
+    },
+    {
+      "sku": "CB-L",
+      "quantity": 24,
+      "length_mm": 420,
+      "width_mm": 560,
+      "height_mm": 260,
+      "weight_kg": 1.0
     }
   ]
 }

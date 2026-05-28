@@ -1,52 +1,52 @@
 {
   "items": [
     {
-      "sku": "CB-L",
-      "quantity": 16,
-      "length_mm": 420,
-      "width_mm": 560,
-      "height_mm": 260,
-      "weight_kg": 1.0
+      "sku": "C-BTA073V650G3ECE",
+      "quantity": 117,
+      "length_mm": 430,
+      "width_mm": 21.6,
+      "height_mm": 250.0,
+      "weight_kg": 0.165
     },
     {
-      "sku": "TN-M",
-      "quantity": 28,
-      "length_mm": 240,
-      "width_mm": 220,
-      "height_mm": 560,
-      "weight_kg": 1.1
+      "sku": "A-DIA-ELH13-GCE",
+      "quantity": 2,
+      "length_mm": 370,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.06
     },
     {
-      "sku": "TN-S",
-      "quantity": 43,
-      "length_mm": 180,
-      "width_mm": 160,
-      "height_mm": 440,
-      "weight_kg": 0.6
+      "sku": "A-DIA-ELH15-GCE",
+      "quantity": 12,
+      "length_mm": 380,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131
     },
     {
-      "sku": "CB-XL",
-      "quantity": 3,
-      "length_mm": 480,
-      "width_mm": 600,
-      "height_mm": 290,
-      "weight_kg": 1.4
+      "sku": "G-DIA-ELH17-GCE",
+      "quantity": 10,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131
     },
     {
-      "sku": "TN-L",
-      "quantity": 17,
-      "length_mm": 300,
-      "width_mm": 260,
-      "height_mm": 650,
-      "weight_kg": 1.8
+      "sku": "A-DIA-ELH19-GCE",
+      "quantity": 8,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 9.6,
+      "weight_kg": 0.131
     },
     {
-      "sku": "CB-S",
-      "quantity": 41,
-      "length_mm": 300,
-      "width_mm": 380,
-      "height_mm": 180,
-      "weight_kg": 0.4
+      "sku": "A-DIA-ELH21-GCE",
+      "quantity": 4,
+      "length_mm": 410,
+      "width_mm": 14.1,
+      "height_mm": 240.0,
+      "weight_kg": 0.131
     }
   ]
 }
