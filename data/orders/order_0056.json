@@ -1,0 +1,60 @@
+{
+  "items": [
+    {
+      "sku": "RD-M",
+      "quantity": 40,
+      "length_mm": 410,
+      "width_mm": 14,
+      "height_mm": 240,
+      "weight_kg": 0.131
+    },
+    {
+      "sku": "CB-XL",
+      "quantity": 3,
+      "length_mm": 480,
+      "width_mm": 600,
+      "height_mm": 290,
+      "weight_kg": 1.4
+    },
+    {
+      "sku": "WF-M",
+      "quantity": 7,
+      "length_mm": 700,
+      "width_mm": 550,
+      "height_mm": 120,
+      "weight_kg": 0.9
+    },
+    {
+      "sku": "SH-S",
+      "quantity": 21,
+      "length_mm": 330,
+      "width_mm": 460,
+      "height_mm": 8,
+      "weight_kg": 0.07
+    },
+    {
+      "sku": "SM-A",
+      "quantity": 8,
+      "length_mm": 90,
+      "width_mm": 70,
+      "height_mm": 50,
+      "weight_kg": 0.04
+    },
+    {
+      "sku": "CB-S",
+      "quantity": 39,
+      "length_mm": 300,
+      "width_mm": 380,
+      "height_mm": 180,
+      "weight_kg": 0.4
+    },
+    {
+      "sku": "RD-S",
+      "quantity": 3,
+      "length_mm": 340,
+      "width_mm": 12,
+      "height_mm": 200,
+      "weight_kg": 0.09
+    }
+  ]
+}

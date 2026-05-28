@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "sku": "FP-XL",
+      "quantity": 6,
+      "length_mm": 580,
+      "width_mm": 28,
+      "height_mm": 330,
+      "weight_kg": 0.3
+    },
+    {
+      "sku": "SM-B",
+      "quantity": 55,
+      "length_mm": 130,
+      "width_mm": 100,
+      "height_mm": 80,
+      "weight_kg": 0.08
+    },
+    {
+      "sku": "TN-S",
+      "quantity": 50,
+      "length_mm": 180,
+      "width_mm": 160,
+      "height_mm": 440,
+      "weight_kg": 0.6
+    },
+    {
+      "sku": "RD-M",
+      "quantity": 37,
+      "length_mm": 410,
+      "width_mm": 14,
+      "height_mm": 240,
+      "weight_kg": 0.131
+    }
+  ]
+}

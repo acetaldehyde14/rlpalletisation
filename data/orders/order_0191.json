@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "sku": "TN-M",
+      "quantity": 57,
+      "length_mm": 240,
+      "width_mm": 220,
+      "height_mm": 560,
+      "weight_kg": 1.1
+    },
+    {
+      "sku": "FP-M",
+      "quantity": 17,
+      "length_mm": 430,
+      "width_mm": 22,
+      "height_mm": 250,
+      "weight_kg": 0.165
+    },
+    {
+      "sku": "WF-S",
+      "quantity": 27,
+      "length_mm": 550,
+      "width_mm": 460,
+      "height_mm": 80,
+      "weight_kg": 0.5
+    }
+  ]
+}

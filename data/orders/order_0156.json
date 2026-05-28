@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "sku": "FP-S",
+      "quantity": 9,
+      "length_mm": 380,
+      "width_mm": 20,
+      "height_mm": 220,
+      "weight_kg": 0.12
+    },
+    {
+      "sku": "SH-M",
+      "quantity": 8,
+      "length_mm": 400,
+      "width_mm": 540,
+      "height_mm": 10,
+      "weight_kg": 0.131
+    },
+    {
+      "sku": "CU-S",
+      "quantity": 17,
+      "length_mm": 120,
+      "width_mm": 120,
+      "height_mm": 120,
+      "weight_kg": 0.25
+    }
+  ]
+}

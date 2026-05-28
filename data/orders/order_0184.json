@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "sku": "RD-L",
+      "quantity": 34,
+      "length_mm": 500,
+      "width_mm": 18,
+      "height_mm": 270,
+      "weight_kg": 0.18
+    },
+    {
+      "sku": "RD-S",
+      "quantity": 25,
+      "length_mm": 340,
+      "width_mm": 12,
+      "height_mm": 200,
+      "weight_kg": 0.09
+    },
+    {
+      "sku": "RD-M",
+      "quantity": 3,
+      "length_mm": 410,
+      "width_mm": 14,
+      "height_mm": 240,
+      "weight_kg": 0.131
+    }
+  ]
+}

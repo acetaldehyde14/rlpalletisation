@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "sku": "HV-M",
+      "quantity": 42,
+      "length_mm": 350,
+      "width_mm": 280,
+      "height_mm": 240,
+      "weight_kg": 6.0
+    },
+    {
+      "sku": "SM-C",
+      "quantity": 39,
+      "length_mm": 160,
+      "width_mm": 130,
+      "height_mm": 110,
+      "weight_kg": 0.15
+    },
+    {
+      "sku": "SM-A",
+      "quantity": 13,
+      "length_mm": 90,
+      "width_mm": 70,
+      "height_mm": 50,
+      "weight_kg": 0.04
+    },
+    {
+      "sku": "CU-L",
+      "quantity": 51,
+      "length_mm": 280,
+      "width_mm": 280,
+      "height_mm": 280,
+      "weight_kg": 1.8
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "sku": "SM-B",
+      "quantity": 4,
+      "length_mm": 130,
+      "width_mm": 100,
+      "height_mm": 80,
+      "weight_kg": 0.08
+    },
+    {
+      "sku": "SM-A",
+      "quantity": 47,
+      "length_mm": 90,
+      "width_mm": 70,
+      "height_mm": 50,
+      "weight_kg": 0.04
+    },
+    {
+      "sku": "SM-C",
+      "quantity": 29,
+      "length_mm": 160,
+      "width_mm": 130,
+      "height_mm": 110,
+      "weight_kg": 0.15
+    }
+  ]
+}

@@ -1,6 +1,10 @@
 __pycache__/
 *.pyc
 .claude/
-checkpoints/ppo_*_steps.zip
+checkpoints/
 logs/
 .venv/
+.DS_Store
+*.png
+.mplconfig/
+*.zip

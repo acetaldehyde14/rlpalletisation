@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "sku": "SM-C",
+      "quantity": 54,
+      "length_mm": 160,
+      "width_mm": 130,
+      "height_mm": 110,
+      "weight_kg": 0.15
+    },
+    {
+      "sku": "CB-XL",
+      "quantity": 9,
+      "length_mm": 480,
+      "width_mm": 600,
+      "height_mm": 290,
+      "weight_kg": 1.4
+    },
+    {
+      "sku": "CB-S",
+      "quantity": 16,
+      "length_mm": 300,
+      "width_mm": 380,
+      "height_mm": 180,
+      "weight_kg": 0.4
+    },
+    {
+      "sku": "SH-M",
+      "quantity": 3,
+      "length_mm": 400,
+      "width_mm": 540,
+      "height_mm": 10,
+      "weight_kg": 0.131
+    }
+  ]
+}

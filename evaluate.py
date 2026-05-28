@@ -31,7 +31,7 @@ from pallet_env import (
     PalletPackingEnv, expand_items,
     get_rotation_dims, support_fraction,
     NUM_ROTATIONS, SUPPORT_THRESHOLD,
-    PlacedBox, ROTATION_LABELS,
+    PlacedBox, ROTATION_LABELS, K_EP_TOP,
 )
 
 
@@ -319,6 +319,43 @@ def run_agent(model, items, env_kwargs, label="RL agent") -> PalletPackingEnv:
     return base_env
 
 
+def run_scorer(model_path, items, env_kwargs) -> PalletPackingEnv:
+    import torch
+    from train_scorer import PlacementScorer
+
+    ckpt = torch.load(model_path, map_location="cpu", weights_only=False)
+    scorer = PlacementScorer(
+        grid_l=ckpt["grid_l"], grid_w=ckpt["grid_w"],
+        n_actions=ckpt["n_actions"],
+    )
+    scorer.load_state_dict(ckpt["model_state"])
+    scorer.eval()
+
+    env = PalletPackingEnv(items, **env_kwargs, sort_items=True)
+    obs, _ = env.reset()
+    done = False
+    while not done:
+        masks = env.action_masks()
+        valid = np.where(masks)[0]
+        if len(valid) == 0:
+            break
+
+        with torch.no_grad():
+            hm = torch.tensor(obs["heightmap"], dtype=torch.float32).unsqueeze(0)
+            ep = torch.tensor(obs["ep_obs"], dtype=torch.float32).unsqueeze(0)
+            it = torch.tensor(obs["item"], dtype=torch.float32).unsqueeze(0)
+            pr = torch.tensor(obs["progress"], dtype=torch.float32).unsqueeze(0)
+            acts = torch.tensor(valid, dtype=torch.long).unsqueeze(0)
+
+            scores = scorer.score_actions(hm, ep, it, pr, acts)
+            best_idx = torch.argmax(scores[0, :len(valid)]).item()
+            action = int(valid[best_idx])
+
+        obs, _, terminated, truncated, _ = env.step(action)
+        done = terminated or truncated
+    return env
+
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 def main():
     parser = argparse.ArgumentParser()
@@ -332,6 +369,11 @@ def main():
     parser.add_argument("--pallet_width",  type=float, default=1100.0)
     parser.add_argument("--pallet_height", type=float, default=1150.0)
     parser.add_argument("--max_weight",    type=float, default=1500.0)
+    parser.add_argument("--k_ep_top",      type=int,   default=50)
+    parser.add_argument("--scorer",        action="store_true",
+                        help="Evaluate trained PlacementScorer model")
+    parser.add_argument("--order_model",   default=None,
+                        help="Evaluate item-ordering MaskablePPO model")
     args = parser.parse_args()
 
     with open(args.data) as f:
@@ -344,6 +386,7 @@ def main():
         pallet_height=args.pallet_height,
         max_pallet_weight=args.max_weight,
         num_rotations=args.rotations,
+        k_ep_top=args.k_ep_top,
     )
 
     total_vol  = sum(it.length * it.width * it.height for it in items) / 1e9
@@ -365,7 +408,6 @@ def main():
         return
 
     from sb3_contrib import MaskablePPO
-    from stable_baselines3 import DQN, A2C
 
     for model_path in args.model:
         model_path = Path(model_path)
@@ -373,21 +415,50 @@ def main():
             print(f"\nModel not found at {model_path}, skipping.")
             continue
 
-        algo_name = model_path.parent.name if model_path.parent.name in (
-            "maskable_ppo", "dqn", "a2c") else model_path.stem
+        if args.scorer or model_path.suffix == ".pt":
+            agent_env = run_scorer(model_path, items, env_kwargs)
+            report(agent_env, f"PlacementScorer ({model_path.stem})")
+            visualize(agent_env, f"PlacementScorer ({model_path.stem})",
+                      f"scorer_{model_path.stem}.png")
+            continue
 
-        if "dqn" in algo_name:
-            model = DQN.load(model_path)
-        elif "a2c" in algo_name:
-            model = A2C.load(model_path)
-        else:
-            model = MaskablePPO.load(model_path)
-
-        label = f"{type(model).__name__} ({algo_name})"
-        out_png = f"{algo_name}_result.png"
+        model = MaskablePPO.load(model_path)
+        tag = model_path.stem
+        label = f"MaskablePPO ({tag})"
+        out_png = f"agent_{tag}.png"
         agent_env = run_agent(model, items, env_kwargs, label=label)
         report(agent_env, label)
         visualize(agent_env, label, out_png)
+
+    if args.order_model:
+        from order_env import ItemOrderEnv
+        from sb3_contrib.common.wrappers import ActionMasker
+        import torch as _torch
+
+        model_path = Path(args.order_model)
+        if model_path.exists():
+            model = MaskablePPO.load(model_path)
+            order_env = ItemOrderEnv(items, **env_kwargs)
+            wrapped = ActionMasker(order_env, lambda e: e.action_masks())
+            obs, _ = wrapped.reset()
+            done = False
+            while not done:
+                masks = wrapped.action_masks()
+                action, _ = model.predict(obs, action_masks=masks, deterministic=True)
+                obs, _, terminated, truncated, _ = wrapped.step(int(action))
+                done = terminated or truncated
+
+            n_pallets = len([p for p in order_env.pallets if p.placements])
+            total_vol = sum(p.used_volume for p in order_env.pallets)
+            capacity = n_pallets * order_env.pallet_volume if n_pallets > 0 else 1.0
+            util = total_vol / capacity * 100
+            n_placed = sum(len(p.placements) for p in order_env.pallets)
+            print(f"\n=== Item-Order PPO ({model_path.stem}) ===")
+            print(f"Pallets used: {n_pallets}")
+            print(f"Items placed: {n_placed} / {order_env.n_items}")
+            print(f"Avg utilisation: {util:.2f}%")
+        else:
+            print(f"Order model not found at {model_path}")
 
 
 if __name__ == "__main__":

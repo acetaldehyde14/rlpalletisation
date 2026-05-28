@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "sku": "CB-M",
+      "quantity": 7,
+      "length_mm": 370,
+      "width_mm": 520,
+      "height_mm": 230,
+      "weight_kg": 0.7
+    },
+    {
+      "sku": "CB-L",
+      "quantity": 15,
+      "length_mm": 420,
+      "width_mm": 560,
+      "height_mm": 260,
+      "weight_kg": 1.0
+    },
+    {
+      "sku": "CB-XL",
+      "quantity": 5,
+      "length_mm": 480,
+      "width_mm": 600,
+      "height_mm": 290,
+      "weight_kg": 1.4
+    },
+    {
+      "sku": "CB-S",
+      "quantity": 17,
+      "length_mm": 300,
+      "width_mm": 380,
+      "height_mm": 180,
+      "weight_kg": 0.4
+    }
+  ]
+}

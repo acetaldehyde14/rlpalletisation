@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "sku": "FP-XL",
+      "quantity": 12,
+      "length_mm": 580,
+      "width_mm": 28,
+      "height_mm": 330,
+      "weight_kg": 0.3
+    },
+    {
+      "sku": "FP-M",
+      "quantity": 52,
+      "length_mm": 430,
+      "width_mm": 22,
+      "height_mm": 250,
+      "weight_kg": 0.165
+    },
+    {
+      "sku": "FP-S",
+      "quantity": 21,
+      "length_mm": 380,
+      "width_mm": 20,
+      "height_mm": 220,
+      "weight_kg": 0.12
+    },
+    {
+      "sku": "FP-XS",
+      "quantity": 40,
+      "length_mm": 300,
+      "width_mm": 15,
+      "height_mm": 180,
+      "weight_kg": 0.08
+    }
+  ]
+}

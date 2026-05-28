@@ -1,0 +1,234 @@
+[
+  {
+    "sku": "FP-XS",
+    "l": 300,
+    "w": 15,
+    "h": 180,
+    "wt": 0.08,
+    "family": "flat_panel"
+  },
+  {
+    "sku": "FP-S",
+    "l": 380,
+    "w": 20,
+    "h": 220,
+    "wt": 0.12,
+    "family": "flat_panel"
+  },
+  {
+    "sku": "FP-M",
+    "l": 430,
+    "w": 22,
+    "h": 250,
+    "wt": 0.165,
+    "family": "flat_panel"
+  },
+  {
+    "sku": "FP-L",
+    "l": 500,
+    "w": 25,
+    "h": 290,
+    "wt": 0.22,
+    "family": "flat_panel"
+  },
+  {
+    "sku": "FP-XL",
+    "l": 580,
+    "w": 28,
+    "h": 330,
+    "wt": 0.3,
+    "family": "flat_panel"
+  },
+  {
+    "sku": "RD-S",
+    "l": 340,
+    "w": 12,
+    "h": 200,
+    "wt": 0.09,
+    "family": "rod"
+  },
+  {
+    "sku": "RD-M",
+    "l": 410,
+    "w": 14,
+    "h": 240,
+    "wt": 0.131,
+    "family": "rod"
+  },
+  {
+    "sku": "RD-L",
+    "l": 500,
+    "w": 18,
+    "h": 270,
+    "wt": 0.18,
+    "family": "rod"
+  },
+  {
+    "sku": "SH-S",
+    "l": 330,
+    "w": 460,
+    "h": 8,
+    "wt": 0.07,
+    "family": "sheet"
+  },
+  {
+    "sku": "SH-M",
+    "l": 400,
+    "w": 540,
+    "h": 10,
+    "wt": 0.131,
+    "family": "sheet"
+  },
+  {
+    "sku": "SH-L",
+    "l": 480,
+    "w": 620,
+    "h": 12,
+    "wt": 0.2,
+    "family": "sheet"
+  },
+  {
+    "sku": "CB-S",
+    "l": 300,
+    "w": 380,
+    "h": 180,
+    "wt": 0.4,
+    "family": "carton"
+  },
+  {
+    "sku": "CB-M",
+    "l": 370,
+    "w": 520,
+    "h": 230,
+    "wt": 0.7,
+    "family": "carton"
+  },
+  {
+    "sku": "CB-L",
+    "l": 420,
+    "w": 560,
+    "h": 260,
+    "wt": 1.0,
+    "family": "carton"
+  },
+  {
+    "sku": "CB-XL",
+    "l": 480,
+    "w": 600,
+    "h": 290,
+    "wt": 1.4,
+    "family": "carton"
+  },
+  {
+    "sku": "CU-S",
+    "l": 120,
+    "w": 120,
+    "h": 120,
+    "wt": 0.25,
+    "family": "cube"
+  },
+  {
+    "sku": "CU-M",
+    "l": 200,
+    "w": 200,
+    "h": 200,
+    "wt": 0.8,
+    "family": "cube"
+  },
+  {
+    "sku": "CU-L",
+    "l": 280,
+    "w": 280,
+    "h": 280,
+    "wt": 1.8,
+    "family": "cube"
+  },
+  {
+    "sku": "TN-S",
+    "l": 180,
+    "w": 160,
+    "h": 440,
+    "wt": 0.6,
+    "family": "tall"
+  },
+  {
+    "sku": "TN-M",
+    "l": 240,
+    "w": 220,
+    "h": 560,
+    "wt": 1.1,
+    "family": "tall"
+  },
+  {
+    "sku": "TN-L",
+    "l": 300,
+    "w": 260,
+    "h": 650,
+    "wt": 1.8,
+    "family": "tall"
+  },
+  {
+    "sku": "WF-S",
+    "l": 550,
+    "w": 460,
+    "h": 80,
+    "wt": 0.5,
+    "family": "wide_flat"
+  },
+  {
+    "sku": "WF-M",
+    "l": 700,
+    "w": 550,
+    "h": 120,
+    "wt": 0.9,
+    "family": "wide_flat"
+  },
+  {
+    "sku": "WF-L",
+    "l": 850,
+    "w": 650,
+    "h": 150,
+    "wt": 1.5,
+    "family": "wide_flat"
+  },
+  {
+    "sku": "SM-A",
+    "l": 90,
+    "w": 70,
+    "h": 50,
+    "wt": 0.04,
+    "family": "small"
+  },
+  {
+    "sku": "SM-B",
+    "l": 130,
+    "w": 100,
+    "h": 80,
+    "wt": 0.08,
+    "family": "small"
+  },
+  {
+    "sku": "SM-C",
+    "l": 160,
+    "w": 130,
+    "h": 110,
+    "wt": 0.15,
+    "family": "small"
+  },
+  {
+    "sku": "HV-S",
+    "l": 250,
+    "w": 200,
+    "h": 180,
+    "wt": 3.0,
+    "family": "heavy"
+  },
+  {
+    "sku": "HV-M",
+    "l": 350,
+    "w": 280,
+    "h": 240,
+    "wt": 6.0,
+    "family": "heavy"
+  }
+]

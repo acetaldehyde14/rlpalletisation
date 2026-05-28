@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "sku": "TN-L",
+      "quantity": 26,
+      "length_mm": 300,
+      "width_mm": 260,
+      "height_mm": 650,
+      "weight_kg": 1.8
+    },
+    {
+      "sku": "WF-M",
+      "quantity": 29,
+      "length_mm": 700,
+      "width_mm": 550,
+      "height_mm": 120,
+      "weight_kg": 0.9
+    },
+    {
+      "sku": "FP-XS",
+      "quantity": 51,
+      "length_mm": 300,
+      "width_mm": 15,
+      "height_mm": 180,
+      "weight_kg": 0.08
+    },
+    {
+      "sku": "HV-M",
+      "quantity": 58,
+      "length_mm": 350,
+      "width_mm": 280,
+      "height_mm": 240,
+      "weight_kg": 6.0
+    }
+  ]
+}

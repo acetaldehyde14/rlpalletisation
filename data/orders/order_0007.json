@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "sku": "C-BTA073V650G3ECE",
+      "quantity": 29,
+      "length_mm": 430,
+      "width_mm": 21.6,
+      "height_mm": 250.0,
+      "weight_kg": 0.165
+    },
+    {
+      "sku": "A-DIA-ELH13-GCE",
+      "quantity": 1,
+      "length_mm": 370,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.06
+    },
+    {
+      "sku": "A-DIA-ELH15-GCE",
+      "quantity": 29,
+      "length_mm": 380,
+      "width_mm": 520.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131
+    },
+    {
+      "sku": "G-DIA-ELH17-GCE",
+      "quantity": 21,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 230.0,
+      "weight_kg": 0.131
+    },
+    {
+      "sku": "A-DIA-ELH19-GCE",
+      "quantity": 4,
+      "length_mm": 400,
+      "width_mm": 540.0,
+      "height_mm": 9.6,
+      "weight_kg": 0.131
+    },
+    {
+      "sku": "A-DIA-ELH21-GCE",
+      "quantity": 4,
+      "length_mm": 410,
+      "width_mm": 14.1,
+      "height_mm": 240.0,
+      "weight_kg": 0.131
+    }
+  ]
+}

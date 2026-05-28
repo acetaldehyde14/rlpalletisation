@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "sku": "FP-XL",
+      "quantity": 44,
+      "length_mm": 580,
+      "width_mm": 28,
+      "height_mm": 330,
+      "weight_kg": 0.3
+    },
+    {
+      "sku": "SM-A",
+      "quantity": 28,
+      "length_mm": 90,
+      "width_mm": 70,
+      "height_mm": 50,
+      "weight_kg": 0.04
+    },
+    {
+      "sku": "SM-C",
+      "quantity": 22,
+      "length_mm": 160,
+      "width_mm": 130,
+      "height_mm": 110,
+      "weight_kg": 0.15
+    }
+  ]
+}

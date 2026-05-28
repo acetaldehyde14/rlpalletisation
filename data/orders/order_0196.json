@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "sku": "CB-L",
+      "quantity": 28,
+      "length_mm": 420,
+      "width_mm": 560,
+      "height_mm": 260,
+      "weight_kg": 1.0
+    },
+    {
+      "sku": "TN-L",
+      "quantity": 36,
+      "length_mm": 300,
+      "width_mm": 260,
+      "height_mm": 650,
+      "weight_kg": 1.8
+    },
+    {
+      "sku": "CB-XL",
+      "quantity": 19,
+      "length_mm": 480,
+      "width_mm": 600,
+      "height_mm": 290,
+      "weight_kg": 1.4
+    }
+  ]
+}
